@@ -1,0 +1,62 @@
+###
+### A complete description of a Prefect Deployment for flow 'el-parent-gcs-to-bq'
+###
+name: GCS to BQ
+description: Main EL flow to load data into Big Query
+version: f6f994e8a57b0c1a79025353a1dc9cf0
+# The work queue that will handle this deployment's runs
+work_queue_name: default
+tags: []
+parameters: {}
+schedule: null
+infra_overrides: {}
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: el-parent-gcs-to-bq
+manifest_path: null
+infrastructure:
+  type: process
+  env: {}
+  labels: {}
+  name: null
+  command: null
+  stream_output: true
+  working_dir: null
+  _block_document_id: 17a2d36f-7731-492f-9526-146ecaf57ee2
+  _block_document_name: anonymous-a43561e4-7e94-4daf-9d0e-6600d1dcff5f
+  _is_anonymous: true
+  block_type_slug: process
+  _block_type_slug: process
+storage: null
+path: /Users/danielrigney/Desktop/de_project_nutrient_data
+entrypoint: orchestration/flows/gcs_to_bq.py:el_parent_gcs_to_bq
+parameter_openapi_schema:
+  title: Parameters
+  type: object
+  properties:
+    months:
+      title: months
+      default:
+      - 10
+      position: 0
+      type: array
+      items:
+        type: integer
+    year:
+      title: year
+      default: 2021
+      position: 1
+      type: integer
+    labels:
+      title: labels
+      default:
+      - branded_df
+      - food_df
+      position: 2
+      type: array
+      items:
+        type: string
+  required: null
+  definitions: null
