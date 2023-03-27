@@ -1,32 +1,75 @@
--=Overall goal of this README - someone who has set up a GCP account, and nothing else, should be able to follow the instructions to get the files uploaded into BQ and the models created=- 
+# FDA Nutrient Data Pipeline
+### Pulls nutrient data from FDA websites, transforms data, uploads to GCP Datalake and BigQuery, dbt used to create models and finally visualizations created with Power BI. 
 
+###Technologies used:
+Containerization: Docker, Docker Compose  
+Infrastructure as Code: Terraform
+Data Transformation: Pandas
+Workflow Orchestration: Prefect
+Data Lake: Google Cloud Storage
+Data Warehouse: Google BigQuery
+Visualisation: Power BI
 
 Problem: Added sugar to processed foods sold in the US and around the world is a significant source of concern to health agency, doctors, and individual consumers. The Food and Drug Administrations FoodData Central provides information on millions of branded food products. We will use the data provided by the FDA to determine: (1) Percentage of branded food that has sugar as one of the first 5 ingredients in the ingredients list overall and overtime and (2) Determine total grams of sugar 
 
-Instructions can be completed from 
 
-STEP 1: Create virtual environment in Google Cloud Platform
-    - Create SSH Key 
-        Follow instructions at https://www.ssh.com/academy/ssh/keygen to create an ssh key in your .ssh folder ('cd .ssh/' from root directory)
-    - Create GCP virtual instance
-        - Update VM IP address in .ssh/config file 
-        - Connect to VM with 'ssh <name_of_vm_instance>' 
-    - Install Anaconda on virtual machine
-        [Add ]
-    - Install Docker on virtual machine 
-    - Install Docker Compose on virtual machine
-    - Install Terraform 
-    - Clone repo into virtual machine 
+STEP 1: Create and Configure virtual environment in Google Cloud Platform
+1. Create SSH Key 
+    - Follow instructions at https://www.ssh.com/academy/ssh/keygen to create an ssh key in your .ssh folder (` cd .ssh/ ` from root directory)
+2. Create GCP virtual instance
+    - Update VM IP address in ` .ssh/config file ` 
+    - Connect to VM with 'ssh <name_of_vm_instance>' 
+3. Install Anaconda on virtual machine
+4. Install Docker on virtual machine 
+5. Install Docker Compose on virtual machine
+6. Install Terraform
+7. Google Cloud SDK for Ubuntu
+8. Create a Google Cloud Project with ID nutrient-data 
+    - Go to IAM and create a Service Account with these roles:
+        - BigQuery Admin
+        - Storage Admin
+        - Storage Object Admin
+        - Viewer
+    - Download the Service Account credentials, rename it to ` nutrient-data.json ` and store it in ` $HOME/.google/credentials/ `
+7. Clone repo into virtual machine 
 
-https://fdc.nal.usda.gov/download-datasets.html
 
-https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_csv_2021-04-28.zip
-https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_csv_2021-10-28.zip
-https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_csv_2022-04-28.zip
-https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_csv_2022-10-28.zip
+STEP 2: 
 
-base URI = https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_csv_{year}-{month}-28.zip
-(year will only be 2022 and 2021, for now; month will only be '04' or '10') 
+
+
+Download the Service Account credentials, rename it to de-r-stocks.json and store it in $HOME/.google/credentials/.
+On the Google console, enable the following APIs:
+IAM API
+IAM Service Account Credentials API
+Cloud Dataproc API
+Compute Engine API
+Set up the infrastructure on Google Cloud with Terraform
+
+I recommend executing the following on VSCode.
+
+Using VSCode + WSL, open the project folder de_r-stocks.
+
+Open variables.tf and modify:
+
+variable "project" to your own project id (I think may not be necessary)
+variable "region" to your project region
+variable "credentials" to your credentials path
+Open the VSCode terminal and change directory to the terraform folder, e.g. cd terraform.
+
+Initialise Terraform: terraform init
+
+Plan the infrastructure: terraform plan
+
+Apply the changes: terraform apply
+
+If everything goes right, you now have a bucket on Google Cloud Storage called 'datalake_de-r-stocks' and a dataset on BigQuery called 'stocks_data'.
+
+
+
+
+
+
 
 STEPS: 
 1) Create Docker container on GCP cloud instance
