@@ -57,10 +57,10 @@ def write_gcs(path: Path) -> None:
 @flow()
 def etl_web_to_gcs(year: int, month: int) -> None: 
     """The main ETL function"""
-    dataset_file = f"{year}-{month}-28"
+    dataset_file = f"{year}-{month:02}-28"
     dataset_url = f"https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_csv_{dataset_file}.zip"
 
-    list = fetch(dataset_url, dataset_file) # this will be a local file path 
+    list = fetch(dataset_url, dataset_file)
 
 
     for x, df in enumerate(list):
@@ -77,13 +77,14 @@ def etl_web_to_gcs(year: int, month: int) -> None:
 
 @flow()
 def etl_parent_flow(
-    months: list[int] = [10], year: int = 2021
+    months: list[int] = [4, 10], year: int = 2021
 ):
     for month in months:
         etl_web_to_gcs(year, month)
 
 
 if __name__ == "__main__":
-    months = [10]
+    months = [4, 10]
     year = 2021
     etl_parent_flow(months, year)
+
