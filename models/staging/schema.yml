@@ -1,0 +1,47 @@
+version: 2
+
+sources:
+    - name: staging
+      # For bigquery:
+      database: thinking-prism-375117
+
+      # For postgres:
+      # database: production
+
+      schema: dezoomcamp
+
+      # loaded_at_field: record_loaded_at
+      tables:
+        - name: food_nutrients
+         # freshness:
+           # error_after: {count: 6, period: hour}
+
+
+models:
+    - name: stg_food_data
+      description: "Description of my_table"
+      columns:
+        - name: id
+          description: "Unique identifier"
+        - name: fdc_id
+          description: "Foreign key to FDC table"
+        - name: nutrient_id
+          description: "Foreign key to nutrient table"
+        - name: amount
+          description: "Amount of nutrient per 100g of food"
+        - name: data_points
+          description: "Number of data points used to calculate nutrient value"
+        - name: derivation_id
+          description: "Foreign key to derivation table"
+        - name: min
+          description: "Minimum value of nutrient per 100g of food"
+        - name: max
+          description: "Maximum value of nutrient per 100g of food"
+        - name: median
+          description: "Median value of nutrient per 100g of food"
+        - name: loq
+          description: "Limit of quantitation for nutrient measurement"
+        - name: footnote
+          description: "Footnote associated with nutrient value"
+        - name: min_year_acquired
+          description: "Minimum year data was acquired for nutrient value"

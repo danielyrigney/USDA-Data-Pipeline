@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+    - name: core
+      # For bigquery:
+      database: thinking-prism-375117
+
+      # For postgres:
+      # database: production
+
+      schema: dezoomcamp
+
+      # loaded_at_field: record_loaded_at
+      tables:
+        - name: food_df
+        - name: branded_df
+        - name: nutrient_df
+         # freshness:
+           # error_after: {count: 6, period: hour}
+
+models:
+  - name: nutrients_df
+    description: .
+  - name: food_df
+    description: .
+  - name: branded_df
+    description: .
