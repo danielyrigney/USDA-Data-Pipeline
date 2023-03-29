@@ -8,7 +8,7 @@ from prefect_gcp import GcpCredentials
 @task(retries=3)
 def extract_from_gcs(year: int, month: int, label: str) -> Path:
     """Download  data from GCS"""
-    concat = f"{year}-{month}-28"
+    concat = f"{year}-{month:02}-28"
     gcs_path = f"data/{concat}-{label}.parquet"
     gcs_block = GcsBucket.load("zoom-gas")
     gcs_block.get_directory(from_path=gcs_path, local_path=f"../data/")
@@ -50,7 +50,7 @@ def el_gcs_to_bq(year: int, month: int, label: str) -> None:
 
 @flow(log_prints=True)
 def el_parent_gcs_to_bq(
-    months: list[int] = [10], year: int = 2021, labels: list[str] = ["branded_df", "food_df"]
+    months: list[int] = [4, 10], year: int = 2021, labels: list[str] = ["branded_df", "food_df"]
 ):
     """Main EL flow to load data into Big Query"""
 
@@ -61,6 +61,9 @@ def el_parent_gcs_to_bq(
 
 
 if __name__ == "__main__":
-    el_parent_gcs_to_bq(months=[10], year=2021, labels=["branded_df", "food_df"])
+    el_parent_gcs_to_bq(months=[4, 10], year=2021, labels=["branded_df", "food_df"])
+
+
+
 
 
