@@ -11,7 +11,7 @@ Data Warehouse: [Google BigQuery](https://cloud.google.com/bigquery)
 Visualisation: [Power BI](https://powerbi.microsoft.com/en-us/)     
 
 
-![alt text](https://github.com/danielyrigney/USDA-Data-Pipeline/blob/cdf8a02ec7ddb54f4dac5368bccf630575e5374a/images/Screen%20Shot%202023-04-02%20at%2012.38.03%20AM.png "Flow Chart")
+![Flow chart of the technologies used](https://github.com/danielyrigney/USDA-Data-Pipeline/blob/cdf8a02ec7ddb54f4dac5368bccf630575e5374a/images/Screen%20Shot%202023-04-02%20at%2012.38.03%20AM.png "Flow Chart")
 
 Problem: Added sugar to processed foods sold in the US and around the world is a significant source of concern to health agency, doctors, and individual consumers. The United States Department of Agriculture's FoodData Central provides information on millions of branded food products. We will use the data provided by the USDA to explore added sugar in the food we eat
 
@@ -81,3 +81,4 @@ STEP 3: Transform the data and visualize
 1. Connect dbt and build and run the models to create the fact tables and analysis 
 2. Connect Big Query to Power BI (or any other visualization method) and create the visualizations  
 
+![alt text](https://github.com/danielyrigney/USDA-Data-Pipeline/blob/7b2afb174312d8496b306334c758c2debedd38fa/images/Screen%20Shot%202023-04-02%20at%2012.24.21%20AM.png "Visualization")
