@@ -17,24 +17,43 @@ Problem: Added sugar to processed foods sold in the US and around the world is a
 
 
 STEP 1: Create and Configure virtual environment in Google Cloud Platform
-1. Create SSH Key 
-    - Follow [instructions](https://www.ssh.com/academy/ssh/keygen) to create an ssh key in your .ssh folder (` cd .ssh/ ` from root directory)
-2. Create GCP virtual instance
+1. Create a new project in [Google Cloud Platform](https://console.cloud.google.com/) 
+2. Create SSH Key 
+    - Follow [instructions](https://www.ssh.com/academy/ssh/keygen) to create an ssh key. 
+    - Put the private key in your .ssh folder (` cd .ssh/ ` from root directory)
+    - Upload the public key to the Google Cloud in the Metadata section of the virtual machine
+3. Create GCP virtual instance
     - Update VM IP address in ` .ssh/config file ` 
-    - Connect to VM with 'ssh <name_of_vm_instance>' 
-3. Install Anaconda on virtual machine
-4. Install Docker on virtual machine 
-5. Install Docker Compose on virtual machine
-6. Install [Terraform](https://www.terraform.io/downloads)
-7. Google Cloud SDK for Ubuntu
-8. Create a Google Cloud Project with ID nutrient-data 
-    - Go to IAM and create a Service Account with these roles:
-        - BigQuery Admin
-        - Storage Admin
-        - Storage Object Admin
-        - Viewer
-    - Download the Service Account credentials, rename it to ` nutrient-data.json ` and store it in ` $HOME/.google/credentials/ `
-7. Clone repo into virtual machine 
+    - Connect to VM with `ssh <name_of_vm_instance>` 
+4. Install [Anaconda](https://www.anaconda.com/products/distribution#Downloads) on virtual machine
+5. Install Docker on virtual machine by running `sudo apt-get install docker.io` (Use [Docker without Sudo](https://github.com/sindresorhus/guides/blob/main/docker-without-sudo.md)) 
+6. Install [Docker Compose](https://github.com/docker/compose/releases) on virtual machine
+7. Install [Terraform](https://www.terraform.io/downloads)
+8. GCP Setup
+    - Setup [service account & authentication](https://cloud.google.com/docs/authentication/getting-started) for this project
+        - Grant `Viewer` role to begin with.
+        - Download service-account-keys (.json) for auth.
+    - Download [SDK](https://cloud.google.com/sdk/docs/quickstart) for local setup
+    - Set environment variable to point to your downloaded GCP keys
+        ```python
+            export GOOGLE_APPLICATION_CREDENTIALS="<path/to/your/service-account-authkeys>.json"
+            
+            # Refresh token/session, and verify authentication
+            gcloud auth application-default login
+        ```
+8. GCP Access
+    - [IAM Roles](https://cloud.google.com/storage/docs/access-control/iam-roles) for Service account:
+        - Go to the *IAM* section of *IAM & Admin* https://console.cloud.google.com/iam-admin/iam
+        - Click the *Edit principal* icon for your service account.
+        - Add these roles in addition to Viewer: **Storage Admin + Storage Object Admin + BigQuery Admin** 
+    - Enable these APIs for your project:
+        - https://console.cloud.google.com/apis/library/iam.googleapis.com
+        - https://console.cloud.google.com/apis/library/iamcredentials.googleapis.com  
+    - Ensure GOOGLE_APPLICATION_CREDENTIALS env-var is set
+        ```python 
+            export GOOGLE_APPLICATION_CREDENTIALS="<path/to/your/service-account-authkeys>.json"
+        ``` 
+11. Clone repo into virtual machine 
 
 
 STEP 2: Initialize Terraform and run the Prefect flows 
@@ -59,35 +78,6 @@ STEP 2: Initialize Terraform and run the Prefect flows
     - Once the flows finish, run the "GCS to BQ" flows. 
 
 STEP 3: Transform the data and visualize 
-1. 
-
-
-2. Power BI 
-
-
-
-
-STEPS: 
-1) Create Docker container on GCP cloud instance
-    - 4 points: The project is developed in the cloud and IaC tools are used
-2) Create a pipeline for processing this dataset and putting it to a datalake
-    - 4 points: End-to-end pipeline: multiple steps in the DAG, uploading data to data lake
-3) Create a pipeline for moving the data from the lake to a data warehouse
-    - 4 points: Tables are partitioned and clustered in a way that makes sense for the upstream queries (with explanation)
-    - Tables needed for the DW: 
-        - branded_food.csv - has the brand name, #fdc_id is the PK, and the #ingredients 
-        - food.csv - has the food name 
-        - food_nutrient.csv - this is the fact table that indicates the nutrients in each food. It links #fdc_id with #nutrient_id. We want the "amount" of each nutrient. 
-        - nutrient.csv - links #nutrient_id with the name of the nutrient and the unit of measure (#unit_name)
-4) Transform the data in the data warehouse: prepare it for the dashboard
-    - 4 points: Tranformations are defined with dbt, Spark or similar technologies
-
-
-
-
-
-
-
-
-
+1. Connect dbt and build and run the models to create the fact tables and analysis 
+2. Connect Big Query to Power BI (or any other visualization method) and create the visualizations  
 
