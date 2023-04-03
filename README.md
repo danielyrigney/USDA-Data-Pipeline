@@ -1,14 +1,23 @@
 # FDA Nutrient Data Pipeline
-### Pulls nutrient data from FDA websites, transforms data, uploads to GCP Datalake and BigQuery, dbt used to create models and finally visualizations created with Power BI. 
+### Pulls nutrient data from USDA websites, transforms data, uploads to GCP Datalake and BigQuery, dbt used to create models and finally visualizations created with Power BI. 
 
-###Technologies used:
-Containerization: Docker, Docker Compose  
-Infrastructure as Code: Terraform
-Data Transformation: Pandas
-Workflow Orchestration: Prefect
-Data Lake: Google Cloud Storage
-Data Warehouse: Google BigQuery
-Visualisation: Power BI
+### Technologies used:
+Containerization: [Docker](https://www.docker.com)
+
+Infrastructure as Code: [Terraform](https://www.terraform.io)
+
+Data Transformation: [dbt](https://www.getdbt.com)
+
+Workflow Orchestration: [Prefect](https://www.prefect.io)
+
+Data Lake: [Google Cloud Storage](https://cloud.google.com/storage)
+
+Data Warehouse: [Google BigQuery](https://cloud.google.com/bigquery)
+
+Visualisation: [Power BI]()
+
+
+![alt text](https://github.com/danielyrigney/USDA-Data-Pipeline/blob/cdf8a02ec7ddb54f4dac5368bccf630575e5374a/images/Screen%20Shot%202023-04-02%20at%2012.38.03%20AM.png "Flow Chart")
 
 Problem: Added sugar to processed foods sold in the US and around the world is a significant source of concern to health agency, doctors, and individual consumers. The Food and Drug Administrations FoodData Central provides information on millions of branded food products. We will use the data provided by the FDA to determine: (1) Percentage of branded food that has sugar as one of the first 5 ingredients in the ingredients list overall and overtime and (2) Determine total grams of sugar 
 
@@ -22,7 +31,7 @@ STEP 1: Create and Configure virtual environment in Google Cloud Platform
 3. Install Anaconda on virtual machine
 4. Install Docker on virtual machine 
 5. Install Docker Compose on virtual machine
-6. Install Terraform
+6. Install [Terraform](https://www.terraform.io/downloads)
 7. Google Cloud SDK for Ubuntu
 8. Create a Google Cloud Project with ID nutrient-data 
     - Go to IAM and create a Service Account with these roles:
@@ -34,36 +43,16 @@ STEP 1: Create and Configure virtual environment in Google Cloud Platform
 7. Clone repo into virtual machine 
 
 
-STEP 2: 
+STEP 2:
+1. Initialize Terraform
+    - In the main directory 
+
+terraform init
+terraform plan
+terraform apply
 
 
 
-Download the Service Account credentials, rename it to de-r-stocks.json and store it in $HOME/.google/credentials/.
-On the Google console, enable the following APIs:
-IAM API
-IAM Service Account Credentials API
-Cloud Dataproc API
-Compute Engine API
-Set up the infrastructure on Google Cloud with Terraform
-
-I recommend executing the following on VSCode.
-
-Using VSCode + WSL, open the project folder de_r-stocks.
-
-Open variables.tf and modify:
-
-variable "project" to your own project id (I think may not be necessary)
-variable "region" to your project region
-variable "credentials" to your credentials path
-Open the VSCode terminal and change directory to the terraform folder, e.g. cd terraform.
-
-Initialise Terraform: terraform init
-
-Plan the infrastructure: terraform plan
-
-Apply the changes: terraform apply
-
-If everything goes right, you now have a bucket on Google Cloud Storage called 'datalake_de-r-stocks' and a dataset on BigQuery called 'stocks_data'.
 
 
 
